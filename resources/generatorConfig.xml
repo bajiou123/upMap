@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
-
+  <!--注意看此备注: 这个配置文件用于生成映射文件，完成后可运行test里面的Generate.java 即生成映射文件-->
 <generatorConfiguration>
     <context id="testTables" targetRuntime="MyBatis3">
         <commentGenerator>

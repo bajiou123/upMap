@@ -18,6 +18,8 @@ public interface TblAlarmSnmphandlingService {
 
     List<TblAlarmSnmphandlingMapper> selectByExample(TblAlarmSnmphandlingExample example);
 
+    List<TblAlarmSnmphandlingMapper> selectByExamplejoin(TblAlarmSnmphandlingExample example);
+    
     TblAlarmSnmphandlingMapper selectByPrimaryKey(Integer uuid);
 
     int updateByExampleSelective(TblAlarmSnmphandlingMapper record,TblAlarmSnmphandlingExample example);

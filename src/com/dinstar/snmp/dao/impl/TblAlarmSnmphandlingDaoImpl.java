@@ -49,12 +49,19 @@ public class TblAlarmSnmphandlingDaoImpl implements TblAlarmSnmphandlingDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
 	public List<TblAlarmSnmphandlingMapper> selectByExample(
 			TblAlarmSnmphandlingExample example) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<TblAlarmSnmphandlingMapper> selectByExamplejoin(
+			TblAlarmSnmphandlingExample example) {
+		// TODO Auto-generated method stub
+		return getSession().selectList("com.dinstar.snmp.dao.TblAlarmSnmphandlingDao.selectByExamplejoin", example);
 	}
 
 	@Override
@@ -88,5 +95,7 @@ public class TblAlarmSnmphandlingDaoImpl implements TblAlarmSnmphandlingDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }

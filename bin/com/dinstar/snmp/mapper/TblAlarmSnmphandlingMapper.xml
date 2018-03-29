@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dinstar.snmp.dao.TblAlarmSnmphandlingMapper">
-  <resultMap id="BaseResultMap" type="com.dinstar.snmp.dao.TblAlarmSnmphandling">
+<mapper namespace="com.dinstar.snmp.mapper.TblAlarmSnmphandlingMapper">
+  <resultMap id="BaseResultMap" type="com.dinstar.snmp.mapper.TblAlarmSnmphandlingMapper">
     <id column="uuid" jdbcType="INTEGER" property="uuid" />
     <result column="rec_status" jdbcType="INTEGER" property="recStatus" />
     <result column="object_type" jdbcType="INTEGER" property="objectType" />
@@ -33,6 +33,11 @@
     <result column="alarm_alarm_type" jdbcType="INTEGER" property="alarmAlarmType" />
     <result column="alarm_name" jdbcType="CHAR" property="alarmName" />
     <result column="ne_sn" jdbcType="CHAR" property="neSn" />
+   <!-- into tbl_ne -->
+   <result column="ne_product_id" jdbcType="INTEGER" property="neProductid" />
+   <result column="outer_ip_addr" jdbcType="CHAR" property="outerIpAdd" />
+   <!-- into tbl_alarm_attr -->
+   <result column="alarm_desc" jdbcType="CHAR" property="alarmDesc" /> 
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -99,7 +104,13 @@
     push_sms_flag, push_mail_flag, ne_cpu_use, sip_register_interval, alarm_level, alarm_alarm_type, 
     alarm_name, ne_sn
   </sql>
-  <select id="selectByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingExample" resultMap="BaseResultMap">
+  <sql id="Base_Column_Listjoin">
+	    a.*, 
+		n.product_id as ne_product_id,
+		n.outer_ip_addr as outer_ip_addr, 
+		t.alarm_desc as alarm_desc
+  </sql>
+  <select id="selectByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -113,6 +124,17 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByExamplejoin" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_Listjoin" />
+    from tbl_alarm_snmphandling as a
+    inner join tbl_alarm_attr as t on a.alarm_id=t.uuid
+	inner join tbl_ne as n ON a.ne_uuid=n.uuid
+	where a.domain_uuid=n.domain_uuid
+  </select> 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -123,13 +145,13 @@
     delete from tbl_alarm_snmphandling
     where uuid = #{uuid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingExample">
+  <delete id="deleteByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao">
     delete from tbl_alarm_snmphandling
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandling">
+  <insert id="insert" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao">
     insert into tbl_alarm_snmphandling (uuid, rec_status, object_type, 
       object_id, ne_uuid, alarm_type, 
       cause_id, object_brief, object_desc, 
@@ -153,7 +175,7 @@
       #{alarmLevel,jdbcType=INTEGER}, #{alarmAlarmType,jdbcType=INTEGER}, #{alarmName,jdbcType=CHAR}, 
       #{neSn,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandling">
+  <insert id="insertSelective" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao">
     insert into tbl_alarm_snmphandling
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -346,7 +368,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao" resultType="java.lang.Long">
     select count(*) from tbl_alarm_snmphandling
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -586,7 +608,7 @@
     </set>
     where uuid = #{uuid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandling">
+  <update id="updateByPrimaryKey" parameterType="com.dinstar.snmp.dao.TblAlarmSnmphandlingDao">
     update tbl_alarm_snmphandling
     set rec_status = #{recStatus,jdbcType=INTEGER},
       object_type = #{objectType,jdbcType=INTEGER},

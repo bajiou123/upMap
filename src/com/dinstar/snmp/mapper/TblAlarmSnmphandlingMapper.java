@@ -64,8 +64,40 @@ public class TblAlarmSnmphandlingMapper {
     private String alarmName;
 
     private String neSn;
+    
+    // tbl_ne
+    private Integer neProductid;
+    
+    private String outerIpAdd;
+    
+    // tabl_alarm_attr
+    private String alarmDesc;
 
-    public Integer getUuid() {
+    public Integer getNeProductid() {
+		return neProductid;
+	}
+
+	public void setNeProductid(Integer neProductid) {
+		this.neProductid = neProductid;
+	}
+
+	public String getOuterIpAdd() {
+		return outerIpAdd;
+	}
+
+	public void setOuterIpAdd(String outerIpAdd) {
+		this.outerIpAdd = outerIpAdd;
+	}
+
+	public String getAlarmDesc() {
+		return alarmDesc;
+	}
+
+	public void setAlarmDesc(String alarmDesc) {
+		this.alarmDesc = alarmDesc;
+	}
+
+	public Integer getUuid() {
         return uuid;
     }
 

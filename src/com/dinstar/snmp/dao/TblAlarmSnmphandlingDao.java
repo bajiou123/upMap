@@ -21,6 +21,8 @@ public interface TblAlarmSnmphandlingDao {
 
     List<TblAlarmSnmphandlingMapper> selectByExample(TblAlarmSnmphandlingExample example);
 
+    List<TblAlarmSnmphandlingMapper> selectByExamplejoin(TblAlarmSnmphandlingExample example);
+
     TblAlarmSnmphandlingMapper selectByPrimaryKey(Integer uuid);
 
     int updateByExampleSelective(@Param("record") TblAlarmSnmphandlingMapper record, @Param("example") TblAlarmSnmphandlingExample example);

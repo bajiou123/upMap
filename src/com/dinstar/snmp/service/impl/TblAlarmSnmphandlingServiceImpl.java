@@ -15,18 +15,38 @@ public class TblAlarmSnmphandlingServiceImpl implements
 		TblAlarmSnmphandlingService {
 
 	@Autowired
-	private TblAlarmSnmphandlingService tblAlarmSnmphandlingServiceDao;
+	private TblAlarmSnmphandlingService tblAlarmSnmphandlingServiceService;
 	
 	@Autowired
 	private TblAlarmSnmphandlingDao tblAlarmSnmphandlingDao;
 	
+	private TblAlarmSnmphandlingExample tblAlarmSnmphandlingExample;
+	
+	public TblAlarmSnmphandlingService getTblAlarmSnmphandlingServiceService() {
+		return tblAlarmSnmphandlingServiceService;
+	}
+
+	public void setTblAlarmSnmphandlingServiceService(
+			TblAlarmSnmphandlingService tblAlarmSnmphandlingServiceService) {
+		this.tblAlarmSnmphandlingServiceService = tblAlarmSnmphandlingServiceService;
+	}
+
+	public TblAlarmSnmphandlingExample getTblAlarmSnmphandlingExample() {
+		return tblAlarmSnmphandlingExample;
+	}
+
+	public void setTblAlarmSnmphandlingExample(
+			TblAlarmSnmphandlingExample tblAlarmSnmphandlingExample) {
+		this.tblAlarmSnmphandlingExample = tblAlarmSnmphandlingExample;
+	}
+
 	public TblAlarmSnmphandlingService getTblAlarmSnmphandlingServiceDao() {
-		return tblAlarmSnmphandlingServiceDao;
+		return tblAlarmSnmphandlingServiceService;
 	}
 
 	public void setTblAlarmSnmphandlingServiceDao(
-			TblAlarmSnmphandlingService tblAlarmSnmphandlingServiceDao) {
-		this.tblAlarmSnmphandlingServiceDao = tblAlarmSnmphandlingServiceDao;
+			TblAlarmSnmphandlingService tblAlarmSnmphandlingServiceService) {
+		this.tblAlarmSnmphandlingServiceService = tblAlarmSnmphandlingServiceService;
 	}
 
 	public TblAlarmSnmphandlingDao getTblAlarmSnmphandlingDao() {
@@ -71,8 +91,15 @@ public class TblAlarmSnmphandlingServiceImpl implements
 	@Override
 	public List<TblAlarmSnmphandlingMapper> selectByExample(
 			TblAlarmSnmphandlingExample example) {
-		// TODO Auto-generated method stub
+		// 获取告警
 		return null;
+	}
+	
+	@Override
+	public List<TblAlarmSnmphandlingMapper> selectByExamplejoin(
+			TblAlarmSnmphandlingExample example) {
+		//获取连表告警 
+		return getTblAlarmSnmphandlingServiceDao().selectByExamplejoin(example);
 	}
 
 	@Override
@@ -80,7 +107,7 @@ public class TblAlarmSnmphandlingServiceImpl implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public int updateByExample(TblAlarmSnmphandlingMapper record,
 			TblAlarmSnmphandlingExample example) {
@@ -106,5 +133,7 @@ public class TblAlarmSnmphandlingServiceImpl implements
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }
